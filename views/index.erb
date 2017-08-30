@@ -1,0 +1,46 @@
+<html>
+<title>Sparta Snippets</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<script>
+$(function() {
+  setInterval(function () {
+    console.log("changing")
+    $.get( "/api/v1/snippets/rand", function (data) {
+      $("#question").text(data.question)
+      $("#answer").text(data.answer)
+      console.log(data);
+    });
+  }, 5000);
+});
+
+</script>
+
+<style>
+body,h1,h2{font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+p {line-height: 2, color: blue;}
+.bgimg, .bgimg2 {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+    color: blue;
+}
+.bgimg {background-image: url("../pic1.png")}
+</style>
+
+<body>
+  <!-- Header / Home-->
+  <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+    <div class="w3-display-middle w3-text-white w3-center">
+      <h1 id="question" class="w3-jumbo" style="color:#0000FF"></h1>
+      <h2 style="color:#0000FF">˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚</h2>
+      <h2 id="answer" style="color:#0000FF"><b></b></h2>
+    </div>
+  </header>
+
+</body>
+</html>

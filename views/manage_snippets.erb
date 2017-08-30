@@ -1,0 +1,15 @@
+<p> <a href="#{url '/snippets/new'}">New</a> </p>
+
+
+
+<% $snippety.each do |snippet| %>
+  <section>
+    <div id="qa">
+      <p id="question"> <%=snippet["question"]%> </p>
+      <p id="answer"> <%=snippet["answer"]%> </p>
+    </div>
+    <div id="edit">
+    </div>
+    <br>
+  </section>
+<%end%>

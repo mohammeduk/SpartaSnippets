@@ -40,7 +40,34 @@ end
 
 # Endpoints
 get '/' do
-  'Welcome to SpartaSnippets!'
+  $snippets = Snippet.all
+  [:question, :answer].each do |filter|
+    $snippets = $snippets.send(filter, params[filter]) if params[filter]
+  end
+
+  $snippets = $snippets.map { |snippet| SnippetSerializer.new(snippet) }.to_json
+  $snippets = JSON.parse($snippets)
+  # binding.pry
+
+  erb :index
+end
+
+get '/snippets/new' do
+
+end
+
+get '/snippets/manage' do
+  snippets = Snippet.all
+
+  [:question, :answer].each do |filter|
+    snippets = snippets.send(filter, params[filter]) if params[filter]
+  end
+
+  response = snippets.map { |snippet| SnippetSerializer.new(snippet) }
+  json_response = response.to_json
+  $snippety = JSON.parse(json_response)
+  # binding.pry
+  erb :manage_snippets
 end
 
 namespace '/api/v1' do
@@ -61,6 +88,19 @@ namespace '/api/v1' do
         halt 400, { message:'Invalid JSON' }.to_json
       end
     end
+
+    def snippet
+      @snippet ||= Snippet.where(id: params[:id]).first
+    end
+
+    def halt_if_not_found!
+      halt(404, { message:'Snippet Not Found'}.to_json) unless snippet
+    end
+
+    def serialize(snippet)
+      SnippetSerializer.new(snippet).to_json
+    end
+
   end
 
   get '/snippets' do
@@ -73,22 +113,42 @@ namespace '/api/v1' do
     snippets.map { |snippet| SnippetSerializer.new(snippet) }.to_json
   end
 
+  get '/snippets/rand' do
+    snippets = Snippet.all
+
+    [:question, :answer].each do |filter|
+      snippets = snippets.send(filter, params[filter]) if params[filter]
+    end
+
+    rand = Random.new
+    rand = rand(0..snippets.count - 1)
+
+    response = snippets.map { |snippet| SnippetSerializer.new(snippet) }[rand]
+    response.to_json
+
+  end
+
   get '/snippets/:id' do |id|
-    snippet = Snippet.where(id: id).first
-    halt(404, { message:'Snippet Not Found'}.to_json) unless snippet
-    SnippetSerializer.new(snippet).to_json
+    halt_if_not_found!
+    serialize(snippet)
   end
 
   post '/snippets' do
     snippet = Snippet.new(json_params)
-    if snippet.save
-      # binding.pry
-      response.headers['Location'] = "#{base_url}/api/v1/snippets/#{snippet.id}"
-      status 201
-    else
-      status 422
-      body SnippetSerializer.new(snippet).to_json
-    end
+    halt 422, serialize(snippet) unless book.snippet
+    response.headers['Location'] = "#{base_url}/api/v1/snippets/#{snippet.id}"
+    status 201
+  end
+
+  patch '/snippets/:id' do |id|
+    halt_if_not_found!
+    halt 422, serialize(snippet) unless snippet.update_attributes(json_params)
+    serialize(snippet)
+  end
+
+  delete '/snippets/:id' do |id|
+    snippet.destroy if snippet
+    status 204
   end
 
 end
