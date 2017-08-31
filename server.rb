@@ -6,6 +6,7 @@ require "pry"
 
 # DB Setup
 Mongoid.load! "mongoid.config"
+use Rack::MethodOverride
 
 # Models
 class Snippet
@@ -32,6 +33,7 @@ class SnippetSerializer
     data = {
       question:@snippet.question,
       answer:@snippet.answer,
+      id: @snippet._id.to_s
     }
     data[:errors] = @snippet.errors if@snippet.errors.any?
     data
@@ -53,7 +55,7 @@ get '/' do
 end
 
 get '/snippets/new' do
-
+  erb :new_snippet
 end
 
 get '/snippets/manage' do
@@ -128,6 +130,16 @@ namespace '/api/v1' do
 
   end
 
+  get '/snippets/manage' do
+    erb :manage_snippets
+  end
+
+  # Edit Snippets confirmation
+  get '/snippets/edit' do
+    $edit_snippet = params[:snip_q]
+    erb :edit_snippet
+  end
+
   get '/snippets/:id' do |id|
     halt_if_not_found!
     serialize(snippet)
@@ -140,15 +152,39 @@ namespace '/api/v1' do
     status 201
   end
 
+  post '/snippets/new' do
+    # binding.pry
+    param_q = params["question"]
+    param_a = params["answer"]
+
+    hash = {"question": param_q}, {"answer": param_a}
+    hash = hash.to_json
+    new_json_snippet = JSON.parse(hash)
+    Snippet.create(question:"#{param_q}", answer:"#{param_a}")
+    redirect '/snippets/manage'
+  end
+
   patch '/snippets/:id' do |id|
     halt_if_not_found!
     halt 422, serialize(snippet) unless snippet.update_attributes(json_params)
     serialize(snippet)
   end
 
-  delete '/snippets/:id' do |id|
+  post '/snippets/delete/:id' do |id|
+    id = params['id'].to_s
+    Snippet.where(id: "#{id}").delete
     snippet.destroy if snippet
     status 204
+    redirect '/snippets/manage'
+  end
+
+  post '/snippets/edit/:id' do |id|
+    binding.pry
+    id = params['id'].to_s
+    Snippet.where(id: "#{id}").delete
+    snippet.destroy if snippet
+    status 204
+    redirect '/snippets/manage'
   end
 
 end
