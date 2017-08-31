@@ -3,6 +3,7 @@ require 'sinatra'
 require 'mongoid'
 require "sinatra/namespace"
 require "pry"
+# include Mongo
 
 # DB Setup
 Mongoid.load! "mongoid.config"
