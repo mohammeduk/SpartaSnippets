@@ -12,6 +12,14 @@ require_relative "./models/snippet"
 Mongoid.load! "mongoid.config"
 # use Rack::MethodOverride
 
+require 'mongo'
+puts Gem.loaded_specs["mongo"].version
+
+mongo_uri = ENV['MONGODB_URI']
+client = Mongo::Client.new(mongo_uri);
+db = client.database
+db.collection_names.each{|name| puts name }
+
 class MyApp < Sinatra::Base
   register Sinatra::Namespace
   # Endpoints
