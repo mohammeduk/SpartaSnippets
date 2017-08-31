@@ -7,3 +7,4 @@ gem 'mongoid'
 gem 'sinatra-contrib'
 gem 'pry'
 gem 'rack'
+gem "thin"
