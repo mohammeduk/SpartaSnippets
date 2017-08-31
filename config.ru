@@ -1,1 +1,2 @@
-bundle exec ruby server.rb
+require "./server"
+run MyApp
