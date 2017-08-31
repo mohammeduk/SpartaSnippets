@@ -25,6 +25,8 @@ $(function() {
 function launchFullScreen(element) {
   var x = document.getElementById('play-h1');
     x.style.display = 'none';
+  var x = document.getElementById('play-h3');
+    x.style.display = 'none';
 
     if(element.requestFullScreen) {
       element.requestFullScreen();
@@ -38,6 +40,8 @@ function launchFullScreen(element) {
   $("#play-link").click(function(){
       $("#play-link").hide(1000);
       $("#play-h1").hide(1000);
+      $("#manage-link").hide(1000);
+      $("#play-h3").hide(1000);
   });
 
   $("#play-link").click(function (element) {
@@ -53,6 +57,8 @@ body, html {height: 100%}
 p {line-height: 2, color: blue;}
 #play-h1 {color: red;}
 #play-link {color: red;}
+#play-h3 {color: red;}
+#manage-link {color: red;}
 .bgimg, .bgimg2 {
     min-height: 100%;
     background-position: center;
@@ -66,7 +72,7 @@ p {line-height: 2, color: blue;}
   <!-- Header / Home-->
   <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
     <div class="w3-display-middle w3-text-white w3-center">
-      <h3 ng-show="!isFullScreen" id="play-h1"><a id="play-link" href="/snippets/manage">˚Manage Snippets˚</a></h3>
+      <h3 ng-show="!isFullScreen" id="play-h3"><a id="manage-link" href="/snippets/manage">˚Manage Snippets˚</a></h3>
       <h1 ng-show="!isFullScreen" id="play-h1"><a id="play-link" onclick="launchFullScreen(document.documentElement)">˚Go Full Screen˚</a></h1>
       <h1 id="question" class="w3-jumbo" style="color:#0000FF"></h1>
       <h2 style="color:#0000FF">˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚</h2>
