@@ -1,84 +1,30 @@
 <html>
-<title>Sparta Snippets</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <script language="JavaScript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-
-<script>
-$(function() {
-  setInterval(function () {
-    console.log("changing")
-    $.get( "/api/v1/snippets/rand", function (data) {
-      $("#question").text(data.question)
-      $("#answer").text(data.answer)
-      console.log(data);
-    });
-  }, 15000);
-});
-
-function launchFullScreen(element) {
-  var x = document.getElementById('play-h1');
-    x.style.display = 'none';
-  var x = document.getElementById('play-h3');
-    x.style.display = 'none';
-
-    if(element.requestFullScreen) {
-      element.requestFullScreen();
-    } else if(element.mozRequestFullScreen) {
-      element.mozRequestFullScreen();
-    } else if(element.webkitRequestFullScreen) {
-      element.webkitRequestFullScreen();
-    }
-  }
-
-  $("#play-link").click(function(){
-      $("#play-link").hide(1000);
-      $("#play-h1").hide(1000);
-      $("#manage-link").hide(1000);
-      $("#play-h3").hide(1000);
-  });
-
-  $("#play-link").click(function (element) {
-      // $("#play-link").hide();
-      launchFullScreen(document.documentElement);
-      // element.display = 'none';
-  })
-</script>
-
-<style>
-body,h1,h2{font-family: "Raleway", sans-serif}
-body, html {height: 100%}
-p {line-height: 2, color: blue;}
-#play-h1 {color: red;}
-#play-link {color: red;}
-#play-h3 {color: red;}
-#manage-link {color: red;}
-.bgimg, .bgimg2 {
-    min-height: 100%;
-    background-position: center;
-    background-size: cover;
-    color: blue;
-}
-/*.bgimg {background-image: url("../pic1.png")}*/
-</style>
-
-<body>
-  <!-- Header / Home-->
-  <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
-    <div class="w3-display-middle w3-text-white w3-center">
-      <h1 ng-show="!isFullScreen" id="play-h1"><a id="play-link" onclick="launchFullScreen(document.documentElement)">˚Go Full Screen˚</a></h1>
-      <h1 id="question" class="w3-jumbo" style="color:#0000FF"></h1>
-      <h2 style="color:#0000FF">˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚</h2>
-      <h2 id="answer" style="color:#0000FF"><b></b></h2>
-      <h3 ng-show="!isFullScreen" id="play-h3"><a id="manage-link" href="/snippets/manage" style="text-decoration:none">˚Manage Snippets˚</a></h3>
-    </div>
-  </header>
-
-</body>
+  <title>Sparta Snippets</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <script language="JavaScript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <head>
+    <script type="text/javascript" src="/javascript/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+      <div class="navbar" style="width:100%">
+        <div class="foo">
+          <a id="play-link" style="color:black" onclick="launchFullScreen(document.documentElement)">Go Full Screen</a>
+          <a id="manage-link" style="color:black" href="/snippets/manage" style="text-decoration:none">Manage Snippets</a>
+        </div>
+      </div>
+      <div class="w3-display-middle w3-text-white w3-center">
+        <!-- <h4 ng-show="!isFullScreen" id="play-h1"><a id="play-link" onclick="launchFullScreen(document.documentElement)">˚Go Full Screen˚</a>  •  <a id="manage-link" href="/snippets/manage" style="text-decoration:none">˚Manage Snippets˚</a></h4> -->
+        <h1 id="question" class="w3-jumbo" style="color:#0000FF"></h1>
+        <h2 style="color:#0000FF">˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚</h2>
+        <h2 id="answer" style="color:#0000FF"><b></b></h2>
+        <!-- <h3 ng-show="!isFullScreen" id="play-h3"><a id="manage-link" href="/snippets/manage" style="text-decoration:none">˚Manage Snippets˚</a></h3> -->
+      </div>
+    </header>
+  </body>
 </html>

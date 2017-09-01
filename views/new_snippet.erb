@@ -1,14 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <form action="/api/v1/snippets/new" method="POST">
-      Question: <input type="text" name="question"><br>
-      Answer: <input type="text" name="answer"><br>
-      <input type="submit" value="Submit">
-    </form>
-  </body>
-</html>
+<link href='//fonts.googleapis.com/css?family=Roboto:100,400,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/new.css">
+<div class="quiz-window">
+  <div class="quiz-window-header">
+    <div class="quiz-window-title">Manage Snippets</div>
+    <button class="quiz-window-close">&times;</button>
+  </div>
+  <div class="quiz-window-body">
+    <div class="gui-window-awards">
+      <ul class="guiz-awards-row guiz-awards-header">
+        <li class="guiz-awards-header-title">Question</li>
+        <li class="guiz-awards-header-track">Answer</li>
+        <li class="guiz-awards-header-time">Add/Edit/Delete</li>
+      </ul>
+      <form action="/api/v1/snippets/new" method="POST">
+      <ul class="guiz-awards-row guiz-awards-row-even">
+        <li class="guiz-awards-title"><textarea style="font-family:sans-serif;" placeholder="Enter a new question here..." style="text-align:center;" type="text" name="question" maxlength="250"></textarea>
+        </li>
+        <li class="guiz-awards-track"><textarea placeholder="Enter an answer to your question here..." style="text-align:center;" type="text" name="answer" maxlength="250"></textarea></li>
+        <li class="guiz-awards-time"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>  <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> </a></li>
+      </ul>
+      </form>
+      <ul class="guiz-awards-row guiz-awards-row-even">
+        <li class="guiz-awards-title">Golden Star
+          <div class="guiz-awards-subtitle">90-100% correct answers</div>
+        </li>
+        <li class="guiz-awards-track">8</li>
+        <li class="guiz-awards-time"><a href="#" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a>  <a href="#" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> </a></li>
+      </ul>
+    </div>
+    <div class="guiz-awards-buttons"><button class="guiz-awards-but-back"><i class="fa fa-angle-left"></i> Back</button></div>
+  </div>
+</div>

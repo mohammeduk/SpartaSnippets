@@ -1,0 +1,59 @@
+table { width: 40%; } /* Make table wider */
+td, th { border: 2px solid #CCC; } /* Add borders to cells */
+#button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #D2CDCC;
+  border-right: 1px solid #D2CDCC;
+  border-bottom: 1px solid #CDCACA;
+  border-left: 1px solid #D2CDCC;
+}
+textarea {
+    width: 300px;
+    height: 80px;
+    /*margin: 0 auto;
+    display: block;*/
+}
+#question_input {
+    width: 200px;
+    height: 80px;
+    margin: 0 auto;
+    display: block;
+}
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+#placeholder{
+  text-align: center;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 0.95;
+  text-align:center;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  margin:auto;
+}
+
+.foo {
+  display: table;
+  margin: 0 auto;
+}

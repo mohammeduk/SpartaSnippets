@@ -1,0 +1,43 @@
+body {margin:0;}
+
+body,h1,h2,h4{font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+p {line-height: 2, color: blue;}
+#play-h1 {color: red;}
+#play-link {color: red;}
+#play-h3 {color: red;}
+#manage-link {color: red;}
+.bgimg, .bgimg2 {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+    color: blue;
+}
+a:hover {
+ cursor:pointer;
+}
+.navbar {
+  overflow: hidden;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 0.95;
+  text-align:center;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  margin:auto;
+}
+
+.foo {
+  display: table;
+  margin: 0 auto;
+}
