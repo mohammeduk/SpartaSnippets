@@ -1,14 +1,50 @@
 <!DOCTYPE html>
+
 <html>
+<style>
+table { width: 40%; } /* Make table wider */
+td, th { border: 2px solid #CCC; } /* Add borders to cells */
+textarea {
+    width: 300px;
+    height: 80px;
+    margin: 0 auto;
+    display: block;
+}
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+</style>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Edit Snippet</title>
+    <link rel="stylesheet" type="text/css" href="css/edit.css">
+    <script type="text/javascript" src="javascript/edit.js"></script>
+
   </head>
   <body>
-    <form action="/api/v1/snippets/new" method="POST">
-      Question: <input type="text" name="question"><br>
-      Answer: <input type="text" name="answer"><br>
-      <input type="submit" value="Submit">
-    </form>
+    <div class="center">
+      <h1>Edit Snippet</h1>
+    </div>
+    <div class="center">
+      <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1>
+        <tr>
+          <th>Questions</th>
+          <th>Answers</th>
+        </tr>
+        <form action="/api/v1/snippets/edited/" method="POST">
+          <tr>
+            <td height="10"><textarea style="text-align:center;" rows="1" cols="10" type="text" name="question" maxlength="50"><%=@question%></textarea></td>
+            <td height="10"><textarea style="text-align:center;" rows="1" cols="90" type="text" name="answer" maxlength="250"><%=@answer%></textarea></td>
+            <td width="20%" height="50"><input type="submit" value="Submit"></td>
+          </tr>
+        </form>
+      </table>
+    </div>
+    <div class="center">
+      <h3><a href="/snippets/manage">Back to Manage Snippets</a></h3>
+    </div>
+
   </body>
 </html>

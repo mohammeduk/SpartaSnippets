@@ -1,84 +1,76 @@
-<!-- <p> <a href="/snippets/new">New</a> </p> -->
-<!--
-<style>
-  table {
-      width: 90%;
-      border: 3px solid #73AD21;
-  }
-</style>
-
-  <table>
-    <tr>
-      <th>Question</th>
-      <th>Answer</th>
-      <th>Edit/Delete</th>
-    </tr>
-    <% $snippety.each do |snippet| %>
-    <form action="/api/v1/snippets/edit" method="PATCH" id="form1">
-      <tr>
-        <td name="snip_q"><%=snippet["question"]%></td>
-        <td name="snip_a"><%=snippet["answer"]%></td>
-        <td>
-          <button type="submit">Edit</button> | <button type="submit">Delete</button>
-        </td>
-      </tr>
-    <%end%>
-    </form>
-  </table> -->
-
- <!-- Other -->
-
 <html>
 <style>
-table { width: 90%; } /* Make table wider */
+table { width: 40%; } /* Make table wider */
 td, th { border: 2px solid #CCC; } /* Add borders to cells */
+#button {
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #D2CDCC;
+  border-right: 1px solid #D2CDCC;
+  border-bottom: 1px solid #CDCACA;
+  border-left: 1px solid #D2CDCC;
+}
+textarea {
+    width: 300px;
+    height: 80px;
+    /*margin: 0 auto;
+    display: block;*/
+}
+#question_input {
+    width: 200px;
+    height: 80px;
+    margin: 0 auto;
+    display: block;
+}
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+#placeholder{
+  text-align: center;
+}
 </style>
 <head>
 <script type="text/javascript" src="../public/table_script.js"></script>
 </head>
 
 <body>
-
-<div id="wrapper">
-<table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1>
-<tr>
-<th>Questions</th>
-<th>Answers</th>
-  </tr>
-
-  <form action="/api/v1/snippets/new" method="POST">
-    <tr>
-      <td><input type="text" name="question" maxlength="50"></td>
-      <td><input type="text" name="answer" maxlength="250"></td>
-      <td><input type="submit" value="Add A New Snippet!"></td>
-    </tr>
-  </form>
-
-  <% $snippety.each do |snippet| %>
-  <tr class="row" id="row">
-    <td id="question_row1"><%=snippet["question"]%></td>
-    <td id="answer_row1"><%=snippet["answer"]%></td>
-    <td>
-
-      <form method="POST" action='/api/v1/snippets/edit/<%= snippet %>'>
-        <input type="submit" id="edit_button1" value="Edit" class="edit">
+  <div class="center">
+    <h1>Manage Snippets </h1>
+  </div>
+  <div id="wrapper" class="center">
+    <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1>
+      <tr>
+        <th>Questions</th>
+        <th>Answers</th>
+        <th>Add/Edit/Delete</th>
+      </tr>
+      <form action="/api/v1/snippets/new" method="POST">
+        <tr>
+          <td height="10"><textarea id="placeholder" placeholder="Enter a new question here..." style="text-align:center;" rows="1" cols="90" type="text" name="question" maxlength="250"></textarea></td>
+          <td height="10"><textarea placeholder="Enter an answer to your question here..." style="text-align:center;" rows="1" cols="90" type="text" name="answer" maxlength="250"></textarea></td>
+          <td width="10%" height="50"><input type="submit" value="Add A New Snippet!"></td>
+        </tr>
       </form>
-      <form onsubmit="return confirm('Are you sure you want to delete the Snippet?')" action='/api/v1/snippets/delete/<%= snippet["id"] %>' method="post">
-        <input type="submit" value="Delete" class="delete">
-      </form>
-
-    </td>
-  </tr>
-  <%end%>
-  <!-- <tr>
-    <td><input type="text" id="new_question"></td>
-    <td><input type="text" id="new_answer"></td>
-    <td><input type="button" class="add" onclick="add_row();" value="Add Snippet"></td>
-  </tr> -->
-
-</table>
-
-</div>
-
+      <% $snippety.each do |snippet| %>
+      <tr class="row" id="row">
+        <td id="question_row1"><%=snippet["question"]%></td>
+        <td id="answer_row1"><%=snippet["answer"]%></td>
+        <td>
+          <form onsubmit="return confirm('Are you sure you want to delete the Snippet?')" action='/api/v1/snippets/delete/<%= snippet["id"] %>' method="post">
+            <input type="submit" value="Delete" class="delete"> | <a id="button" shape="circle" color="black" href='/api/v1/snippets/edit/<%= snippet["id"] %>'>Edit</a>
+          </form>
+        </td>
+      </tr>
+      <%end%>
+    </table>
+  </div>
+  <div class="center">
+    <h3><a href="/">Play</a></h3>
+  </div>
 </body>
 </html>
