@@ -2,29 +2,16 @@
   <title>Sparta Snippets</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <script language="JavaScript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <head>
     <script type="text/javascript" src="/javascript/index.js"></script>
+    <!-- <script language="JavaScript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" type="text/css" href="/css/index.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
-  
-  <body>
-    <script type="text/javascript">
-    $(function() {
-      setInterval(function () {
-        console.log("changing")
-        $.get( "/api/v1/snippets/rand", function (data) {
-          $("#question").text(data.question)
-          $("#answer").text(data.answer)
-          console.log(data);
-        });
-      }, 15000);
-    });
 
-    </script>
+  <body>
     <header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
       <div class="navbar" style="width:100%">
         <div class="foo">

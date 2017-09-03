@@ -1,3 +1,13 @@
+$(function() {
+  setInterval(function () {
+    console.log("changing")
+    $.get( "/api/v1/snippets/rand", function (data) {
+      $("#question").text(data.question)
+      $("#answer").text(data.answer)
+      console.log(data);
+    });
+  }, 15000);
+});
 
 function launchFullScreen(element) {
   var x = document.getElementById('play-link');
