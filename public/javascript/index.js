@@ -22,7 +22,7 @@ function launchFullScreen(element) {
     } else if(element.webkitRequestFullScreen) {
       element.webkitRequestFullScreen();
     }
-    $('header').slideUp();
+    $('.navbar').slideUp();
     $('#play-link').slideUp();
   }
 
@@ -43,7 +43,7 @@ function launchFullScreen(element) {
         var event = state ? 'FullscreenOn' : 'FullscreenOff';
 
         if(event == 'FullscreenOff') {
-            $('header').slideDown();
+            $('.navbar').slideDown();
             $('#play-link').slideDown();
         }
     });
