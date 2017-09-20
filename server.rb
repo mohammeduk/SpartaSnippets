@@ -48,7 +48,8 @@ class MyApp < Sinatra::Base
   end
 
   get '/snippets/manage' do
-    snippets = Snippet.all
+    snippets = Snippet.where(username: "#{$user.username}")
+    # snippets = Snippet.all
 
     [:question, :answer].each do |filter|
       snippets = snippets.send(filter, params[filter]) if params[filter]
@@ -57,7 +58,6 @@ class MyApp < Sinatra::Base
     response = snippets.map { |snippet| SnippetSerializer.new(snippet) }
     json_response = response.to_json
     $snippety = JSON.parse(json_response)
-    # binding.pry
     erb :manage_snippets
   end
 
@@ -70,10 +70,19 @@ class MyApp < Sinatra::Base
   end
 
   get '/users/index' do
-    binding.pry
     session_id = session[:id]
     $user = User.find(session_id)
     erb :index
+  end
+
+  get '/users/admin' do
+    erb :admin
+  end
+
+  get '/users/logout' do
+    session.clear
+    redirect '/'
+    binding.pry
   end
 
   post '/registrations' do
@@ -190,14 +199,13 @@ class MyApp < Sinatra::Base
 
       post '/snippets/new' do
         content_type 'application/json'
-        # binding.pry
         param_q = params["question"]
         param_a = params["answer"]
 
         hash = {"question": param_q}, {"answer": param_a}
         hash = hash.to_json
         new_json_snippet = JSON.parse(hash)
-        Snippet.create(question:"#{param_q}", answer:"#{param_a}")
+        Snippet.create(username: "#{$user.username}", question:"#{param_q}", answer:"#{param_a}")
         redirect '/snippets/manage'
       end
 
