@@ -28,26 +28,31 @@ class MyApp < Sinatra::Base
   $counter = 0
   $user = nil
 
-  # Endpoints
-  get '/' do
-    if session[:id] == nil
-      erb :home
-    else
-      $snippets = Snippet.where(username: "#{$user.username}")
-      [:question, :answer].each do |filter|
-        $snippets = $snippets.send(filter, params[filter]) if params[filter]
-      end
-      $snippets = $snippets.map { |snippet| SnippetSerializer.new(snippet) }.to_json
-      $snippets = JSON.parse($snippets)
-      erb :index
+  helpers do
+    def protected!
+      redirect '/login' if session[:id] == nil
     end
   end
 
+  # Endpoints
+  get '/' do
+    protected!
+    $snippets = Snippet.where(username: "#{$user.username}")
+    [:question, :answer].each do |filter|
+      $snippets = $snippets.send(filter, params[filter]) if params[filter]
+    end
+    $snippets = $snippets.map { |snippet| SnippetSerializer.new(snippet) }.to_json
+    $snippets = JSON.parse($snippets)
+    erb :index
+  end
+
   get '/snippets/new' do
+    protected!
     erb :new_snippet
   end
 
   get '/snippets/manage' do
+    protected!
     snippets = Snippet.where(username: "#{$user.username}")
     # snippets = Snippet.all
 
@@ -70,6 +75,7 @@ class MyApp < Sinatra::Base
   end
 
   get '/users/index' do
+    protected!
     session_id = session[:id]
     $user = User.find(session_id)
     erb :index
@@ -79,14 +85,23 @@ class MyApp < Sinatra::Base
     erb :admin
   end
 
+  get '/login' do
+    erb :home
+  end
+
   get '/users/logout' do
+    protected!
     session.clear
     redirect '/'
-    binding.pry
+  end
+
+  get '/signup' do
+    erb :signup
   end
 
   post '/registrations' do
-    $user = User.create(username:"#{params['username']}", password:"#{params['password']}")
+    binding.pry
+    $user = User.create(username:"#{params['reg_username']}", password:"#{params['reg_password']}")
     $user.save
     session[:id] = $user.id.to_s
     redirect '/users/index'
@@ -127,6 +142,7 @@ class MyApp < Sinatra::Base
       end
 
       get '/snippets' do
+        protected!
         content_type 'application/json'
         snippets = Snippet.where(username: "#{$user.username}")
 
@@ -138,6 +154,7 @@ class MyApp < Sinatra::Base
       end
 
       get '/snippets/rand' do
+        protected!
         content_type 'application/json'
 
         # Random number code for snippets
@@ -173,23 +190,27 @@ class MyApp < Sinatra::Base
       end
 
       get '/snippets/manage' do
+        protected!
         content_type 'application/json'
         erb :manage_snippets
       end
 
       # Edit Snippets confirmation
       get '/snippets/edit' do
+        protected!
         # $edit_snippet = params[:snip_q]
         erb :edit_snippet
       end
 
       get '/snippets/:id' do |id|
+        protected!
         content_type 'application/json'
         halt_if_not_found!
         serialize(snippet)
       end
 
       post '/snippets' do
+        protected!
         content_type 'application/json'
         snippet = Snippet.new(json_params)
         halt 422, serialize(snippet) unless book.snippet
@@ -198,6 +219,7 @@ class MyApp < Sinatra::Base
       end
 
       post '/snippets/new' do
+        protected!
         content_type 'application/json'
         param_q = params["question"]
         param_a = params["answer"]
@@ -210,6 +232,7 @@ class MyApp < Sinatra::Base
       end
 
       patch '/snippets/:id' do |id|
+        protected!
         content_type 'application/json'
         halt_if_not_found!
         halt 422, serialize(snippet) unless snippet.update_attributes(json_params)
@@ -217,6 +240,7 @@ class MyApp < Sinatra::Base
       end
 
       post '/snippets/delete/:id' do |id|
+        protected!
         content_type 'application/json'
         id = params['id'].to_s
         Snippet.where(id: "#{id}").delete
@@ -235,6 +259,7 @@ class MyApp < Sinatra::Base
       # # end
 
       get '/snippets/edit/:id' do |id|
+        protected!
         $id = id
         @id = params['id'].to_s
         a = Snippet.find("#{@id}")
@@ -244,6 +269,7 @@ class MyApp < Sinatra::Base
       end
 
       post '/snippets/edited/' do
+        protected!
         content_type 'application/json'
         Snippet.where(:id => "#{$id}").update_all(:question => "#{params['question']}", :answer => "#{params['answer']}")
         redirect '/snippets/manage'
