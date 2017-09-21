@@ -100,11 +100,28 @@ class MyApp < Sinatra::Base
   end
 
   post '/registrations' do
-    binding.pry
-    $user = User.create(username:"#{params['reg_username']}", password:"#{params['reg_password']}")
-    $user.save
-    session[:id] = $user.id.to_s
-    redirect '/users/index'
+    if User.where(username: "#{params['username']}").empty? == false
+      $user = User.create(username:"#{params['reg_username']}", password:"#{params['reg_password']}")
+      $user.save
+      session[:id] = $user.id.to_s
+      redirect '/users/index'
+    else
+      redirect '/signup'
+    end
+  end
+
+  post '/login' do
+    if User.where(username: "#{params['username']}").empty? == false
+      user = User.find_by(:username => "Bob")
+      if params['password'] == user.password
+      session[:id] = user.id.to_s
+      redirect '/users/index'
+      else
+        redirect '/login'
+      end
+    else
+      redirect '/login'
+    end
   end
 
     namespace '/api/v1' do
