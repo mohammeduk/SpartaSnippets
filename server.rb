@@ -33,7 +33,7 @@ class MyApp < Sinatra::Base
     if session[:id] == nil
       erb :home
     else
-      $snippets = Snippet.all
+      $snippets = Snippet.where(username: "#{$user.username}")
       [:question, :answer].each do |filter|
         $snippets = $snippets.send(filter, params[filter]) if params[filter]
       end
@@ -128,7 +128,7 @@ class MyApp < Sinatra::Base
 
       get '/snippets' do
         content_type 'application/json'
-        snippets = Snippet.all
+        snippets = Snippet.where(username: "#{$user.username}")
 
         [:question, :answer].each do |filter|
           snippets = snippets.send(filter, params[filter]) if params[filter]
@@ -154,7 +154,7 @@ class MyApp < Sinatra::Base
         # response = snippets.map { |snippet| SnippetSerializer.new(snippet) }[rand]
         # response.to_json
 
-        snippets = Snippet.all
+        snippets =Snippet.where(username: "#{$user.username}")
 
         [:question, :answer].each do |filter|
           snippets = snippets.send(filter, params[filter]) if params[filter]
