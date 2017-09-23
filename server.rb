@@ -110,14 +110,21 @@ class MyApp < Sinatra::Base
   end
 
   post '/registrations' do
+    $flash.clear if !$flash.empty?
+
     if session[:id] != nil
       redirect '/'
-    elsif User.where(username: "#{params['username']}").empty? == false
+    elsif User.where(username: "#{params['reg_username']}").empty?
+      if params['reg_password'] != params['reg_password2']
+        $flash = {reg_error: "Passwords did not match"}
+        redirect '/signup'
+      end
       $user = User.create(username:"#{params['reg_username']}", password:"#{params['reg_password']}")
       $user.save
       session[:id] = $user.id.to_s
       redirect '/users/index'
     else
+      $flash = {reg_error: "The Username #{params['reg_username']} is already taken"}
       redirect '/signup'
     end
   end
@@ -133,10 +140,11 @@ class MyApp < Sinatra::Base
       session[:id] = user.id.to_s
       redirect '/users/index'
       else
-        $flash = {error: "Username or Password was incorrect"}
+        $flash = {login_error: "Username or Password was incorrect"}
         redirect '/login'
       end
     else
+      $flash = {login_error: "Username does not exist"}
       redirect '/login'
     end
   end

@@ -19,8 +19,8 @@
       <div class="left">
         <form action="/login" method="POST">
           <h1 id="h1login" align="left">Login</h1>
-          <%if !$flash.empty?%>
-            <label for=""><%=$flash[:error]%></label></br>
+          <%if $flash.key? :login_error%>
+            <label style="max-width: 10px; word-wrap: break-word; font-size: 12px;" id="label"><%=$flash[:login_error]%></label></br><p> </p>
           <%end%>
           <input type="text" name="username" placeholder="Username" required/>
           <input type="password" name="password" placeholder="Password" autocomplete="current-password" required/>
