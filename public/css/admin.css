@@ -16,29 +16,34 @@ body {
 #login-box {
   position: relative;
   margin: 5% auto;
+  margin-top: 14%;
   width: 600px;
-  height: 400px;
+  height: 80%;
   background: #FFF;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .left {
-  position: absolute;
   top: 0;
   left: 0;
   box-sizing: border-box;
-  padding: 40px;
-  width: 300px;
+  padding-right: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 190px;
   height: 400px;
 }
+
 
 h1 {
   margin: 0 0 20px 0;
   font-weight: 300;
   font-size: 28px;
+  padding-left: 75px;
 }
 
+label,
 input[type="text"],
 input[type="password"] {
   display: block;
@@ -60,6 +65,11 @@ input[type="password"]:focus {
   border-bottom: 2px solid #16a085;
   color: #16a085;
   transition: 0.2s ease;
+   text-align: center;
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
 }
 
 input[type="submit"] {
@@ -75,6 +85,7 @@ input[type="submit"] {
   text-transform: uppercase;
   transition: 0.1s ease;
   cursor: pointer;
+  margin-left: 53px;
 }
 
 input[type="submit"]:hover,

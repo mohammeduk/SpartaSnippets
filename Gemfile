@@ -7,3 +7,4 @@ gem 'sinatra-contrib'
 gem 'pry'
 gem 'rack'
 gem "thin"
+gem 'sinatra-flash'

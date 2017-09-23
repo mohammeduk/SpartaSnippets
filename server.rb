@@ -7,6 +7,7 @@ require "pry"
 require_relative "./helpers/snippetserializer"
 require_relative "./models/snippet"
 require_relative "./models/user"
+require 'sinatra/flash'
 # include Mongo
 
 # DB Setup
@@ -27,6 +28,7 @@ class MyApp < Sinatra::Base
 
   $counter = 0
   $user = nil
+  $flash = Hash.new
 
   helpers do
     def protected!
@@ -86,7 +88,11 @@ class MyApp < Sinatra::Base
   end
 
   get '/login' do
-    erb :home
+    if session[:id] != nil
+      redirect '/'
+    else
+      erb :home
+    end
   end
 
   get '/users/logout' do
@@ -96,11 +102,17 @@ class MyApp < Sinatra::Base
   end
 
   get '/signup' do
-    erb :signup
+    if session[:id] != nil
+      redirect '/'
+    else
+      erb :signup
+    end
   end
 
   post '/registrations' do
-    if User.where(username: "#{params['username']}").empty? == false
+    if session[:id] != nil
+      redirect '/'
+    elsif User.where(username: "#{params['username']}").empty? == false
       $user = User.create(username:"#{params['reg_username']}", password:"#{params['reg_password']}")
       $user.save
       session[:id] = $user.id.to_s
@@ -111,12 +123,17 @@ class MyApp < Sinatra::Base
   end
 
   post '/login' do
-    if User.where(username: "#{params['username']}").empty? == false
-      user = User.find_by(:username => "Bob")
+    $flash.clear if !$flash.empty?
+
+    if session[:id] != nil
+      redirect '/'
+    elsif User.where(username: "#{params['username']}").empty? == false
+      user = User.find_by(:username => "#{params['username']}")
       if params['password'] == user.password
       session[:id] = user.id.to_s
       redirect '/users/index'
       else
+        $flash = {error: "Username or Password was incorrect"}
         redirect '/login'
       end
     else

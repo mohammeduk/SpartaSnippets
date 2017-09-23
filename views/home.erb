@@ -18,8 +18,10 @@
     <div id="login-box">
       <div class="left">
         <form action="/login" method="POST">
-          <h1 align="center">Login</h1>
-
+          <h1 id="h1login" align="left">Login</h1>
+          <%if !$flash.empty?%>
+            <label for=""><%=$flash[:error]%></label></br>
+          <%end%>
           <input type="text" name="username" placeholder="Username" required/>
           <input type="password" name="password" placeholder="Password" autocomplete="current-password" required/>
 
