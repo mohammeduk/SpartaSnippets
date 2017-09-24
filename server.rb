@@ -53,6 +53,13 @@ class MyApp < Sinatra::Base
     erb :new_snippet
   end
 
+  post '/user/delete/:id' do
+    protected!
+    User.where(:id => "#{params['id']}").delete
+    session.clear
+    redirect '/'
+  end
+
   get '/snippets/manage' do
     protected!
     snippets = Snippet.where(username: "#{$user.username}")
@@ -66,10 +73,6 @@ class MyApp < Sinatra::Base
     json_response = response.to_json
     $snippety = JSON.parse(json_response)
     erb :manage_snippets
-  end
-
-  get '/registrations/signup' do
-    erb :home
   end
 
   get '/sessions/login' do
@@ -91,7 +94,7 @@ class MyApp < Sinatra::Base
     if session[:id] != nil
       redirect '/'
     else
-      erb :home
+      erb :login
     end
   end
 

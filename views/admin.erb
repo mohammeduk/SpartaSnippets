@@ -19,6 +19,12 @@
           <td><%=$user.password%></td>
         </tr>
         <tr>
+          <td>Delete account</td>
+          <form onsubmit="return confirm('Are you sure you want to delete your account? It cannot be recovered.')" action='/user/delete/<%= $user.id.to_s %>' method="POST">
+            <td><input type="submit" value="Delete" class="delete"></td>
+          </form>
+        </tr>
+        <tr>
           <td align="center"><a href="/users/logout">Logout</a></td>
         </tr>
       </tbody>
