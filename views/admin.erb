@@ -3,7 +3,20 @@
   <head>
     <meta charset="utf-8">
     <title>Admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/admin.css">
   </head>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#showHide").click(function() {
+        if ($(".password").attr("type") == "password") {
+          $(".password").attr("type", "text");
+        } else {
+          $(".password").attr("type", "password");
+        }
+      });
+    });
+  </script>
   <body>
     <table style="width:20%" align="center">
       <tbody>
@@ -16,7 +29,12 @@
         </tr>
         <tr>
           <td>Password</td>
-          <td><%=$user.password%></td>
+          <!-- <td class="password"><%=$user.password%></td> -->
+          <td class="password"><input style="border: 0; background-color: white;" type="password" value="foo" name="password" class="password" size="25" disabled></td>
+          <td>
+            <input type="checkbox" id="showHide" />
+            <label for="showHide" id="showHideLabel">Show Password</label>
+          </td>
         </tr>
         <tr>
           <td>Delete account</td>
@@ -25,7 +43,7 @@
           </form>
         </tr>
         <tr>
-          <td align="center"><a href="/users/logout">Logout</a></td>
+          <td align="center"><a href="/snippets/manage">Back</a> - <a href="/users/logout">Logout</a></td>
         </tr>
       </tbody>
     </table>
