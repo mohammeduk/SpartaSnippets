@@ -8,3 +8,4 @@ gem 'pry'
 gem 'rack'
 gem "thin"
 gem 'sinatra-flash'
+gem 'mongo', '~> 2.4'

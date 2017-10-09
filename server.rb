@@ -29,10 +29,22 @@ class MyApp < Sinatra::Base
   $counter = 0
   $user = nil
   $flash = Hash.new
+  $login_counter = 0
+  $reg_counter = 0
 
   helpers do
     def protected!
       redirect '/login' if session[:id] == nil
+    end
+
+    def clear_error
+      if $login_counter >= 2
+        $flash.clear if !$flash.empty?
+        $login_counter = 0
+      elsif $reg_counter >= 2
+        $flash.clear if !$flash.empty?
+        $reg_counter = 0
+      end
     end
   end
 
@@ -55,6 +67,8 @@ class MyApp < Sinatra::Base
 
   post '/user/delete/:id' do
     protected!
+    username = User.find(:id => "#{params['id']}").username
+    Snippet.where(:username => "#{username}").delete
     User.where(:id => "#{params['id']}").delete
     session.clear
     redirect '/'
@@ -91,9 +105,11 @@ class MyApp < Sinatra::Base
   end
 
   get '/login' do
+    # clear_error
     if session[:id] != nil
       redirect '/'
     else
+      $login_counter += 1
       erb :login
     end
   end
@@ -105,9 +121,11 @@ class MyApp < Sinatra::Base
   end
 
   get '/signup' do
+    # clear_error
     if session[:id] != nil
       redirect '/'
     else
+      $reg_counter += 1
       erb :signup
     end
   end
@@ -147,7 +165,7 @@ class MyApp < Sinatra::Base
         redirect '/login'
       end
     else
-      $flash = {login_error: "Username does not exist"}
+      $flash = {login_error: "Username #{params['username']} does not exist"}
       redirect '/login'
     end
   end
